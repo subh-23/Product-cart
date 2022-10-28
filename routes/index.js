@@ -4,34 +4,21 @@ const Product = require("../model/product");
 
 // GET home page
 route.get("/", async (req, res) => {
-  if(req.body.page && req.body.limit){
-    const page = parseInt(req.body.page);
-    const limit = parseInt(req.body.limit);
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-    const results = {};
-    const products = await Product.find().limit(limit).skip(startIndex).exec();
-    results.results = products;
-    if (endIndex < await Product.countDocuments().exec()) {
-      results.next = {
-        page: page + 1,
-        limit: limit
-      };
-    }
-    if (startIndex > 0) {
-      results.previous = {
-        page: page - 1,
-        limit: limit
-      };
-    }
-    res.render("index", { allProducts: results });
-  }else{
   const allProducts = await Product.find();
-  return res.render("index", { allProducts: allProducts });
-  }
+  res.render("index", { allProducts: allProducts });
 });
-
-// POST home page
+// POST pagination data
+route.post("/paginationData", async (req, res) => {
+  const { page, limit } = req.body;
+  res.redirect(`/${page}/${limit}`);
+});
+// GET pagination data
+route.get("/:page/:limit", async (req, res) => {
+  const { page, limit } = req.params;
+  const results = await Product.find().limit(limit*1).skip((page-1)*limit);
+  res.render("index", { allProducts: results });
+});
+// POST home page/ Add product
 route.post("/", async (req, res) => {
   const { name, price, description, image } = req.body;
   await Product.create({
@@ -45,11 +32,10 @@ route.post("/", async (req, res) => {
   res.redirect("/");
 });
 
-// // PUT home page
+// // PUT home page / Update product
 route.get("/update/:id", (req, res) => {
   const { name, price, description, image } = req.body;
-  Product.findByIdAndUpdate(req.params.id, 
-  {
+  Product.findByIdAndUpdate(req.params.id, {
     name: name,
     price: price,
     description: description,
@@ -60,9 +46,11 @@ route.get("/update/:id", (req, res) => {
   res.redirect("/");
 });
 
-// // DELETE home page
+// DELETE home page / Delete product
 route.get("/delete/:id", async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
+  await Product.findByIdAndDelete(req.params.id).then(() => {
+    console.log("Product deleted");
+  });
   res.redirect("/");
 });
 

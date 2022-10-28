@@ -9,16 +9,17 @@
       rel="stylesheet"
       href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"
     /> -->
-    <link
+    <!-- <link
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
       rel="stylesheet"
-    />
+    /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="bg-gray-900">
     <div class="flex flex-col space-y-5">
       <div class="text-center mt-10">
-        <h1 class="text-5xl m-3">All Products</h1>
-        <p class="text-l font-serif m-3">
+        <h1 class="text-5xl m-3 col dark:text-white">All Products</h1>
+        <p class="text-l font-serif m-3 dark:text-white">
           Play around with your products and see how they look on the website
         </p>
       </div>
@@ -31,6 +32,12 @@
             data-modal-toggle="authentication-modal"
           >
             Add New Product
+          </button>
+          <button
+            class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            onclick="location.href='/'" type="button"
+          >
+            Get all Product
           </button>
         </div>
 
@@ -147,13 +154,14 @@
       </div>
       <!-- ----------------------- -->
       <div class="flex flex-col">
-        <h1 class="text-xl text-center p-3">Perform pagination</h1>
-        <form class="flex flex-row justify-center space-x-2">
+        <h1 class="text-xl text-center p-3 dark:text-white">Perform pagination</h1>
+        <form class="flex flex-row justify-center space-x-2" action="/paginationData" method="post">
           <div>
             <!-- <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Page</label> -->
             <input
               type="text"
               id="page"
+              name="page"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Page eg. 2"
               required
@@ -164,6 +172,7 @@
             <input
               type="text"
               id="limit"
+              name="limit"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Limit eg. 5"
               required
