@@ -4,6 +4,8 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
+const bodyParser = require("body-parser");
+const methodOverride = require('method-override')
 dotenv.config();
 const Product = require("./model/product");
 // mongodb connection
@@ -13,10 +15,13 @@ mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true, useUnifiedTopolo
   }
 );
 // middlewares
+app.use(bodyParser.urlencoded({ limit: '4mb', extended: false }))
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(methodOverride('_method'))
+
 
 
 // routes

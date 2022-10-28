@@ -5,15 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <!-- <link
-      rel="stylesheet"
-      href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"
-    /> -->
-    <!-- <link
-      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
-      rel="stylesheet"
-    /> -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- //filepond headers -->
+    <link
+      href="https://unpkg.com/filepond/dist/filepond.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"
+    ></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"
+    ></script>
+    <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script defer src="/javascript/fileUpload.js"></script>
+    <!-- filepond header ends here  -->
   </head>
   <body class="bg-gray-900">
     <div class="flex flex-col space-y-5">
@@ -40,9 +65,6 @@
             Get all Product
           </button>
         </div>
-
-        <!-- modal -->
-        <!-- Modal toggle -->
 
         <!-- Main modal -->
         <div
@@ -130,14 +152,17 @@
                   <div>
                     <label
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      for="user_avatar"
+                      for="cover"
                       >Upload file</label
                     >
                     <input
-                      class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                      aria-describedby="user_avatar_help"
-                      id="user_avatar"
+                      class="filepond block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept="image/png, image/jpeg, image/jpg"
+                      data-max-file-size="4MB"
+                      aria-describedby="cover"
+                      id="cover"
                       type="file"
+                      name="cover"
+                      required
                     />
                   </div>
                   <button
@@ -183,7 +208,7 @@
               type="submit"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             >
-              Submit
+              Find
             </button>
           </div>
         </form>
@@ -204,7 +229,7 @@
                 <th scope="col" class="py-3 px-6">Product</th>
                 <th scope="col" class="py-3 px-6">Price</th>
                 <th scope="col" class="py-3 px-6">Update</th>
-                <th scope="col" class="py-3 px-6">Action</th>
+                <th scope="col" class="py-3 px-6">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -214,8 +239,8 @@
               >
                 <td class="p-4 w-32">
                   <img
-                    src="/docs/images/products/apple-watch.png"
-                    alt="Apple Watch"
+                    src="<%= allProducts[i].coverImagePath %> "
+                    alt="<%= allProducts[i].name %> "
                   />
                 </td>
                 <td
@@ -231,7 +256,7 @@
                 <td class="py-4 px-6">
                   <a
                   href="/update/<%= allProducts[i].id %>"
-                    class="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >Update</a
                   >
                 </td>
